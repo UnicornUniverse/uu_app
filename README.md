@@ -35,11 +35,28 @@ Example:
 
 The Authorized API requires Bearer Token authentication to secure API calls. You need to include the token in the `Authorization` header of each request.
 
-### Obtaining a Bearer Token
+### Obtaining a Bearer Token in browser
 1. Sign up or log in to your account at https://uuidentity.plus4u.net/.
 2. Generate an API token from the **Show token** button.
 3. **Keep your token secure; treat it as a password.**
 4. It is possible to change scope to make it more secure or to use it for local development with `http://`
+
+### Obtaining a Bearer Token programmatically
+To obtain a Bearer token programmatically, you can use the OIDC client credentials flow. Here’s an example using cURL:
+
+```bash
+curl --request POST \
+  --url https://uuidentity.plus4u.net/uu-oidc-maing02/bb977a99f4cc4c37a2afce3fd599d0a7/oidc/grantToken \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"grant_type": "password",
+	"username": "...",
+	"password": "...",
+	"scope": "openid https://uuapp.plus4u.net/..."
+}'
+```
+Replace `username`, `password`, and `scope` with your actual credentials and desired scope.
+Bearer token will be returned in the response in the `id_token` field.
 
 ### Using the Bearer Token
 Include the Bearer token in the `Authorization` header of your HTTP request as follows:
